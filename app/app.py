@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
 from datetime import datetime, timezone
+from flask_cors import CORS #pour try sur swagger
 import requests
 import uuid
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 def load_events():
     try:
@@ -28,6 +30,15 @@ def check_id_exists(service_url, id_value, service):
 
 @app.route("/deployments/<deployment_id>/events", methods=["GET"])
 def events_deployement(deployment_id):
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
+    
     events = load_events()
     deployment_events = []
 
@@ -39,11 +50,29 @@ def events_deployement(deployment_id):
 
 @app.route("/events", methods=["GET"])
 def list_events():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
+    
     events = load_events()
     return jsonify(list(events.values())), 200 #retourne notre dictionnaire sous forme de json -> passage par liste obligé
 
 @app.route("/events", methods=["POST"])
 def create_event():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
+    
     events = load_events()
     data = request.json
 
@@ -83,6 +112,15 @@ def create_event():
 
 @app.route("/events/<event_id>", methods=["GET"])
 def get_event(event_id):
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
+    
     events = load_events()
     if event_id in events:
         return jsonify(events[event_id]), 200
