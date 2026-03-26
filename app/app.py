@@ -56,12 +56,12 @@ def create_event():
     if not data["type"] in types:
         return jsonify({"message": "Invalid type"}), 400
     
-    ok, msg = check_id_exists("http://deployments_service:8080/deployments/", data["deploymentId"], "Deployment")
+    ok, msg = check_id_exists("http://proxy:8080/deployments/", data["deploymentId"], "Deployment")
     if not ok: #id non existant ou service non attegnable
         return jsonify({"message": msg}), 400
 
     if data.get("initiatedBy"): #argument faculatif
-        ok, msg = check_id_exists("http://deployments_service:8080/users/", data["initiatedBy"], "User")
+        ok, msg = check_id_exists("http://proxy:8080/users/", data["initiatedBy"], "User")
         if not ok:
             return jsonify({"message": msg}), 400
 
