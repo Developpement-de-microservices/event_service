@@ -20,7 +20,6 @@ Il sert principalement à :
 
 * Création d’un événement
 * Consultation d’un événement
-* Liste des événements avec pagination
 * Filtrage par :
   * deploymentId
   * type
