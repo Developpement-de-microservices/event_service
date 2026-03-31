@@ -19,9 +19,10 @@ def save_events(events):
     with open("./data.json", "w") as file:
         json.dump(events, file)
 
-def check_id_exists(service_url, id_value, service):
+def check_id_exists(service_url, id_value, service, token):
+    headers = {"Authorization": f"Bearer {token}"}
     try:
-        resp = requests.get(service_url+id_value)
+        resp = requests.get(service_url+id_value,headers=headers)
         if resp.status_code != 200:
             return False, f"{service} ID does not exist"
         return True, None
@@ -85,12 +86,12 @@ def create_event():
     if not data["type"] in types:
         return jsonify({"message": "Invalid type"}), 400
     
-    ok, msg = check_id_exists("http://proxy/deployments/", data["deploymentId"], "Deployment")
+    ok, msg = check_id_exists("http://proxy/deployments/", data["deploymentId"], "Deployment", token)
     if not ok: #id non existant ou service non attegnable
         return jsonify({"message": msg}), 400
 
     if data.get("initiatedBy"): #argument faculatif
-        ok, msg = check_id_exists("http://proxy/users/", data["initiatedBy"], "User")
+        ok, msg = check_id_exists("http://proxy/users/", data["initiatedBy"], "User", token)
         if not ok:
             return jsonify({"message": msg}), 400
 
