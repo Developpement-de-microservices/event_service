@@ -4,7 +4,7 @@ LABEL maintainer="Esteban Heschung <esteban.heschung@etudiant.univ-rennes.fr>"
 LABEL description="Microservice Flask pour gérer les evenements" 
 LABEL service="events_service"
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl && apt-get clean #curl pour healthcheck
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl && apt-get clean # curl pour healthcheck
 
 WORKDIR /app
 
