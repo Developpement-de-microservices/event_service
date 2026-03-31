@@ -20,7 +20,6 @@ Il sert principalement à :
 
 * Création d’un événement
 * Consultation d’un événement
-* Liste des événements avec pagination
 * Filtrage par :
   * deploymentId
   * type
@@ -29,25 +28,21 @@ Il sert principalement à :
 
 ---
 
-## Modèle de données
+## Endpoints
 
-### Event
+| Méthode | Endpoint                              | Auth | Description                                                       |
+| ------- | ------------------------------------- | ---- | ----------------------------------------------------------------- |
+| GET     | `/events`                             | Oui  | Liste tous les événements                                         |
+| POST    | `/events`                             | Oui  | Crée un nouvel événement (vérifie l’ID du deployment et le token) |
+| GET     | `/events/{id}`                        | Oui  | Récupère un événement par son ID                                  |
+| PUT     | `/events/{id}`                        | Oui  | Met à jour un événement                                           |
+| DELETE  | `/events/{id}`                        | Oui  | Supprime un événement                                             |
+| GET     | `/deployments/{deployment_id}/events` | Oui  | Liste tous les événements liés à un deployment spécifique         |
+| GET     | `/events/health`                      | Non  | Vérifie l’état du service Events                                  |
 
-```json
-    {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "deploymentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "type": "DEPLOYMENT_STARTED",
-      "message": "Working",
-      "data": {
-        "additionalProp1": {}
-      },
-      "initiatedBy": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "createdAt": "2026-03-25T12:30:04.763Z"
-    }
-```
 
-### Champs
+
+## Champs
 
 | Champ        | Description                        |
 | ------------ | ---------------------------------- |
