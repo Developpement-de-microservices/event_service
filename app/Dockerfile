@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y curl && apt-get c
 
 WORKDIR /app
 
-COPY app/requirements.txt .  # dossier app du dépot github
+COPY app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app/app.py . # dossier app du dépot github
