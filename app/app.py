@@ -39,8 +39,13 @@ def events_deployment(deployment_id):
     if not verify_token(token):
         return jsonify({"error": "Not authorized"}), 401
     
-    deployment_events = list(events_collection.find({"deploymentId": deployment_id}, {"_id": 0})) #on recherche par déploiement_id sans récupérer l'id mongoDB
-    return jsonify(deployment_events), 200
+    events = []
+    for event in events_collection.find({"deploymentId": deployment_id}):
+        event["id"] = str(event["_id"]) #transforme en id de l'objet mongo
+        del event["_id"]
+        events.append(event)
+
+    return jsonify(events), 200
 
 @app.route("/events", methods=["GET"])
 def list_events():
@@ -48,8 +53,13 @@ def list_events():
     if not verify_token(token):
         return jsonify({"error": "Not authorized"}), 401
     
-    all_events = list(events_collection.find({}, {"_id": 0}))
-    return jsonify(all_events), 200
+    events = []
+    for event in events_collection.find():
+        event["id"] = str(event["_id"]) #transforme en id de l'objet mongo
+        del event["_id"]
+        events.append(event)
+
+    return jsonify(events), 200
 
 @app.route("/events", methods=["POST"])
 def create_event():
