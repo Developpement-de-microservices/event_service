@@ -8,13 +8,13 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y curl && apt-get c
 
 WORKDIR /app
 
-COPY app/requirements.txt .
+COPY app/requirements.txt . # dossier app du dépot github
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app/app.py .
+COPY app/app.py . # dossier app du dépot github
 
 EXPOSE 5004
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:5004/events || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:5004/events/health || exit 1
 
 CMD ["python", "app.py"]

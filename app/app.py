@@ -127,5 +127,14 @@ def get_event(event_id):
     
     return jsonify({"message": "Event not found"}), 404
 
+@app.route("/events/health", methods=["GET"])
+def get_health_events():
+    response = {
+        "status": "ok",
+        "service": "Events",
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    return jsonify(response), 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5004)
