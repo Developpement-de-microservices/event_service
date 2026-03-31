@@ -86,7 +86,9 @@ def create_event():
     }
 
     result = events_collection.insert_one(event)
-    event["id"] = str(result.inserted_id)  #on met une entrée id avec l'id de mongoDB
+    event["id"] = str(result.inserted_id) #on met une entrée id avec l'id de mongoDB
+    del event["_id"] #impossible de convertir _id en json
+    
     return jsonify(event), 201
 
 @app.route("/events/<event_id>", methods=["GET"])
