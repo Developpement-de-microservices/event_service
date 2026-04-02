@@ -20,10 +20,6 @@ Il sert principalement à :
 
 * Création d’un événement
 * Consultation d’un événement
-* Filtrage par :
-  * deploymentId
-  * type
-  * initiatedBy
 * Consultation des événements d’un déploiement spécifique
 
 ---
@@ -71,6 +67,7 @@ Exemples :
 ## Architecture
 
 * Microservice indépendant
+* Stockage via MongoDB
 * Communication via REST / JSON
 * Intégré avec :
 
@@ -82,7 +79,7 @@ Exemples :
 ## Remarques
 
 * Le champ `data` est volontairement flexible pour s’adapter à chaque type d’événement
-* Les identifiants sont générés en UUID
+* Les identifiants sont des identifiants générés par MongoDB
 * Ce service est conçu pour être utilisé avec un proxy dans l’architecture globale
 
 ---

@@ -23,3 +23,15 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 
 ### Fixed
 - N/A (première version)
+
+## [2.0] - 02/04/2026
+### Added
+- Ajout de bibliothèque MongoDB pour la communication
+
+### Changed
+- Passage en MongoDB au lieu d'utiliser du JSON pour le stockage
+- Les ID ne sont plus des uuid mais des id MongoDB
+- Changement de l'image python pour une image alpine plus légère
+
+### Fixed
+- N/A, même fonctionnement que la v1
